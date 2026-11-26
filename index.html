@@ -83,7 +83,7 @@
   const destaque = () => {
     const e = D.estilos.find((x) => x.id === sel);
     $("destaque").innerHTML = `<button type="button" class="fechar" id="fechar" aria-label="Fechar">✕</button>
-      <div class="midia">${e.video ? `<video id="vid" src="${e.video}" poster="${e.capa || ""}" controls autoplay muted playsinline loop preload="metadata"></video>` : (e.capa ? `<img src="${e.capa}" alt="Exemplo do estilo ${esc(e.nome)}">` : "")}</div>
+      <div class="midia">${e.video ? `<video id="vid" src="${e.video}" poster="${e.capa || ""}" controls playsinline loop preload="auto"></video>` : (e.capa ? `<img src="${e.capa}" alt="Exemplo do estilo ${esc(e.nome)}">` : "")}</div>
       <div>
         <span class="rotulo">${esc(D.categorias[e.cat])}</span>
         <h2>${esc(e.nome)}</h2>
@@ -97,6 +97,7 @@
       </div>`;
     $("fechar").onclick = fecha;
     const v = $("vid");
+    if (v) { v.volume = 1; v.play().catch(() => { v.muted = true; v.play().catch(() => {}); }); }
     if (v) v.addEventListener("error", () => { v.outerHTML = `<img src="${e.capa}" alt=""><p class="nota">Não foi possível tocar o vídeo aqui.</p>`; }, {once: true});
     $("usar").onclick = async () => {
       const txt = `"estilo": "${e.id}"`;
