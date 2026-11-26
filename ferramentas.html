@@ -1,13 +1,15 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Caixa de ferramentas</title><style>
-:root{--bg:#f6f5f2;--fg:#17181c;--muted:#5f626b;--line:#dcdad4;--card:#fff;--accent:#2f5bea}
-@media (prefers-color-scheme:dark){:root{--bg:#111214;--fg:#ececef;--muted:#9a9da7;--line:#2a2c31;--card:#191a1e;--accent:#7d9bff}}
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Caixa de ferramentas</title><style>:root{--bg:#f6f5f2;--fg:#17181c;--muted:#5f626b;--line:#dcdad4;--card:#fff;--accent:#2f5bea}@media (prefers-color-scheme:dark){:root{--bg:#111214;--fg:#ececef;--muted:#9a9da7;--line:#2a2c31;--card:#191a1e;--accent:#7d9bff}}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
-main{max-width:860px;margin:0 auto;padding:24px max(16px,env(safe-area-inset-left)) 60px}
-h1{font-size:30px;line-height:1.15;margin:8px 0 12px}h2{font-size:21px;margin:34px 0 10px;padding-top:14px;border-top:1px solid var(--line)}
-p,li{color:var(--fg)}strong{font-weight:700}code{font:13px ui-monospace,Consolas,monospace;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
-.t{overflow-x:auto;margin:10px 0}table{border-collapse:collapse;width:100%;font-size:14px;background:var(--card);border-radius:10px;overflow:hidden}
-th,td{text-align:left;vertical-align:top;padding:9px 11px;border-bottom:1px solid var(--line)}th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+main{max-width:860px;margin:0 auto;padding-block:24px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1{font-size:30px;line-height:1.15;margin:8px 0 12px;text-wrap:balance}
+h2{font-size:21px;margin:34px 0 10px;padding-top:14px;border-top:1px solid var(--line)}
+h3{font-size:17px;margin:24px 0 8px}
+strong{font-weight:700}
+code{font:13px ui-monospace,Consolas,monospace;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+.t{overflow-x:auto;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;background:var(--card)}
+th,td{text-align:left;vertical-align:top;padding:9px 11px;border-bottom:1px solid var(--line)}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
 a{color:var(--accent)}hr{border:0}
 </style></head><body><main><h1>Caixa de ferramentas do motion</h1>
 <p>Um motion é feito de <strong>camadas</strong>. Cada vídeo escolhe uma opção (ou algumas) de cada camada.
