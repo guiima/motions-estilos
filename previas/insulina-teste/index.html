@@ -14,6 +14,10 @@
   body { background: var(--bg); color: var(--fg); font-family: var(--f-ui); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 40px }
   .wrap { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 28px; max-width: 1080px; margin: 0 auto; align-items: start }
   .tela { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px) }
+  .erros { margin-top: 10px; padding: 10px 12px; border-radius: 10px; background: #fdecec; color: #7a1414; font: 500 13px/1.4 var(--f-ui, system-ui) }
+  .erros pre { white-space: pre-wrap; word-break: break-word; max-height: 140px; overflow: auto; margin: 6px 0; font-size: 12px }
+  .erros button { font: 600 13px var(--f-ui, system-ui); padding: 4px 10px; border-radius: 8px; border: 1px solid #c95b5b; background: #fff; color: #7a1414; cursor: pointer }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .erros { background: #3a1616; color: #ffd6d6 } }
   .info { min-width: 0 }
   .eyebrow { margin: 0; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted) }
   h1 { margin: 6px 0 4px; font-size: 26px; line-height: 1.15; text-wrap: balance }
