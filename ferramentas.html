@@ -1,0 +1,416 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caixa de ferramentas</title><style>
+:root{--bg:#f6f5f2;--fg:#17181c;--muted:#5f626b;--line:#dcdad4;--card:#fff;--accent:#2f5bea}
+@media (prefers-color-scheme:dark){:root{--bg:#111214;--fg:#ececef;--muted:#9a9da7;--line:#2a2c31;--card:#191a1e;--accent:#7d9bff}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:860px;margin:0 auto;padding:24px max(16px,env(safe-area-inset-left)) 60px}
+h1{font-size:30px;line-height:1.15;margin:8px 0 12px}h2{font-size:21px;margin:34px 0 10px;padding-top:14px;border-top:1px solid var(--line)}
+p,li{color:var(--fg)}strong{font-weight:700}code{font:13px ui-monospace,Consolas,monospace;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+.t{overflow-x:auto;margin:10px 0}table{border-collapse:collapse;width:100%;font-size:14px;background:var(--card);border-radius:10px;overflow:hidden}
+th,td{text-align:left;vertical-align:top;padding:9px 11px;border-bottom:1px solid var(--line)}th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+a{color:var(--accent)}hr{border:0}
+</style></head><body><main><h1>Caixa de ferramentas do motion</h1>
+<p>Um motion é feito de <strong>camadas</strong>. Cada vídeo escolhe uma opção (ou algumas) de cada camada.
+O vídeo fica chato quando todas as camadas repetem: mesma tipografia entrando, mesmo som, mesma transição, só texto.</p>
+<p><strong>Legenda de status</strong>
+- ✅ <strong>No motor:</strong> já funciona no motions.
+- 🟢 <strong>Pronto para portar:</strong> já é código Remotion (shotcraft, remocn, projeto do Grok); adaptar é rápido.
+- 🟡 <strong>Receita + código:</strong> está em HTML/canvas (lemo); precisa traduzir para o Remotion.
+- ⚪ <strong>Só ideia:</strong> existe só como descrição.</p>
+<p>Fontes: <strong>lemo</strong> = lemo-opuscar (100 estilos) · <strong>shotcraft</strong> = video-shotcraft (124 cartões de tomada) ·
+<strong>remocn</strong> = biblioteca remocn (~200 componentes) · <strong>charlie</strong> = charlie-motion · <strong>grok</strong> = founderpapers-kit.</p>
+<hr />
+<h2>1. Estilo visual (cores, fontes, textura, estética)</h2>
+<div class="t"><table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Quantidade</th>
+<th>Fonte</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Estilos completos (galeria)</td>
+<td>72</td>
+<td>lemo, charlie, grok, nossos</td>
+<td>1 ✅ (Colagem), 7 parciais, resto 🟡/🟢</td>
+</tr>
+<tr>
+<td>Cores e fontes da marca</td>
+<td>por marca</td>
+<td><code>conteudo/marcas/</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Texturas: papel, grão, retícula, risografia, VHS, CRT, luz vazada, aberração cromática</td>
+<td>~15</td>
+<td>remocn (<code>halftone-print</code>, <code>riso-print</code>, <code>vhs-filter</code>, <code>crt-screen</code>, <code>light-leak</code>…), lemo</td>
+<td>✅ papel/grão · 🟢 resto</td>
+</tr>
+<tr>
+<td>Fundos animados (shaders)</td>
+<td>62</td>
+<td>remocn <code>shader-*</code></td>
+<td>🟢 (pesados para renderizar no seu PC; usar pouco)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Formato do roteiro (como a história é contada)</h2>
+<p>História de um personagem · antes/depois · mito vs verdade · tutorial/passo a passo · lista surpreendente ·
+contagem regressiva · bastidores · pergunta e resposta · POV · linha do tempo · comparação · desafio · investigação.
+Fonte: lemo <code>DIRECTOR.md</code> (pede 3 estruturas candidatas por vídeo, antes de escolher). ✅ regra no CLAUDE.md.</p>
+<h2>3. Formas de mostrar a informação</h2>
+<div class="t"><table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Opções</th>
+<th>Fonte</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Números</strong></td>
+<td>contador, número rolando, roleta de caça-níquel, placa de aeroporto (split-flap), mostrador/gauge</td>
+<td>remocn <code>rolling-number</code>, <code>number-wheel</code>, <code>slot-machine-roll</code>, <code>value-swap</code>; shotcraft <code>gauge-readout</code></td>
+<td>✅ contador · 🟢 resto</td>
+</tr>
+<tr>
+<td><strong>Gráficos</strong></td>
+<td>barras, linhas, gráfico ao vivo, barra 3D, linha do tempo navegável, antes/depois com cortina</td>
+<td>remocn <code>animated-bar-chart</code>, <code>animated-line-chart</code>; shotcraft <code>chart-live</code>, <code>timeline-travel</code>, <code>before-after-slider-scrub</code>; lemo <code>dataviz</code>, <code>data-physical</code></td>
+<td>✅ barras, linha do tempo, 3D · 🟢/🟡 resto</td>
+</tr>
+<tr>
+<td><strong>Destacar algo na imagem</strong></td>
+<td>círculo à mão, seta de tinta, colchetes de mira, holofote, lupa/raio-X, pixelar região, desenho por cima (telestrator), rótulo com linha até a peça</td>
+<td>remocn <code>scribble-circle</code>, <code>ink-arrow</code>, <code>spotlight</code>, <code>x-ray-scan</code>, <code>pixelate-region</code>, <code>lens-zoom</code>; shotcraft <code>scan-bracket-sweep</code>, <code>scanline-annotate-focus</code>; lemo <code>telestrator</code>, <code>teardown</code></td>
+<td>🟢/🟡 (ainda não temos)</td>
+</tr>
+<tr>
+<td><strong>Listas e passos</strong></td>
+<td>checklist, cartões empilhados, baralho distribuído, cascata, passo a passo com setas</td>
+<td>remocn <code>check-list</code>; shotcraft <code>list-reveal</code>, <code>card-stack</code>, <code>deck-deal-flyin</code>, <code>wall-reveal</code></td>
+<td>✅ lista/etapas · 🟢 resto</td>
+</tr>
+<tr>
+<td><strong>Comparação</strong></td>
+<td>A vs B, tela dividida, 4 cenas paralelas, cortina antes/depois</td>
+<td>shotcraft <code>quad-split</code>, <code>before-after-slider</code></td>
+<td>✅ A vs B · 🟢 resto</td>
+</tr>
+<tr>
+<td><strong>Documentos e notícias</strong></td>
+<td>manchete recortada, documento datilografado, marca vermelha no trecho, citação</td>
+<td>shotcraft <code>document-typewriter-reveal</code>; lemo <code>kino-montage</code>, <code>archive-lighttable</code></td>
+<td>✅ manchete/citação · 🟢 resto</td>
+</tr>
+<tr>
+<td><strong>Interface de app</strong></td>
+<td>chat (iMessage/Telegram/ChatGPT/Claude), checkout, cadastro, onboarding, busca, notificação, cursor clicando</td>
+<td>remocn-ui (46), remocn <code>chat-gpt</code>, <code>claude-chat</code>, <code>simulated-cursor</code>, <code>search-reveal</code></td>
+<td>🟢</td>
+</tr>
+<tr>
+<td><strong>Mapas e lugares</strong></td>
+<td>zoom de satélite, mapa antes/depois, pinos</td>
+<td>lemo <code>satellite-briefing</code></td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><strong>Processos</strong></td>
+<td>mundo isométrico, produto explodindo, maquete projetada, linha de montagem</td>
+<td>lemo <code>iso-infographic</code>, <code>teardown</code>, <code>white-model</code>; remocn <code>isometric-build</code>, <code>exploded-view</code></td>
+<td>🟡/🟢</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. Texto animado (como as palavras aparecem)</h2>
+<div class="t"><table>
+<thead>
+<tr>
+<th>Família</th>
+<th>Exemplos</th>
+<th>Fonte</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Entrada</td>
+<td>sobe e aparece, desfoque que foca, letra por letra, palavra empurrando palavra, voa de lugares diferentes</td>
+<td>shotcraft typography (22); remocn <code>blur-out-up</code>, <code>per-character-rise</code>, <code>word-push</code>, <code>flying-words</code>, <code>soft-blur-in</code></td>
+<td>✅ 1 por estilo · 🟢 resto</td>
+</tr>
+<tr>
+<td>Ênfase</td>
+<td>marca-texto, sublinhado à mão, preenchimento do contorno, palavra que dá zoom, gradiente varrendo</td>
+<td>remocn <code>marker-highlight</code>, <code>ink-underline</code>, <code>outline-fill</code>; shotcraft <code>marker-underline-title</code>, <code>gradient-word-sweep</code>, <code>lead-word-zoom</code></td>
+<td>✅ marca-texto · 🟢 resto</td>
+</tr>
+<tr>
+<td>Troca</td>
+<td>riscar e trocar, roleta vertical, máquina de escrever, glitch, embaralhar (decodificar)</td>
+<td>remocn <code>strikethrough-replace</code>, <code>inline-word-roll</code>, <code>typewriter</code>, <code>matrix-decode</code>, <code>rgb-glitch-text</code></td>
+<td>🟢</td>
+</tr>
+<tr>
+<td>Escrita à mão</td>
+<td>traço que se escreve, giz, caneta</td>
+<td>remocn <code>handwrite</code>; lemo <code>whiteboard</code>, <code>one-line</code></td>
+<td>🟡</td>
+</tr>
+<tr>
+<td>Texto como máscara</td>
+<td>vídeo dentro das letras, letras que viram janela</td>
+<td>shotcraft <code>text-as-mask</code></td>
+<td>🟢</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Legendas</h2>
+<p>32 estilos de legenda no remocn: karaokê, palavra que pula, caixa de destaque, carimbo, máquina de escrever, placa split-flap,
+marcador, tarja de "censurado", emoji, peso variável, contorno, empilhada… 🟢 · No motor: 1 por estilo ✅.</p>
+<h2>6. Transições</h2>
+<div class="t"><table>
+<thead>
+<tr>
+<th>Família</th>
+<th>Exemplos</th>
+<th>Fonte</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Corte com movimento</td>
+<td>whip pan, empurrar, zoom com desfoque, corte escondido no movimento</td>
+<td>remocn <code>whip-pan</code>, <code>push-through</code>, <code>zoom-blur</code>; shotcraft <code>transition-hidden-cut</code>, <code>transition-travel</code></td>
+<td>✅ 4 · 🟢 resto</td>
+</tr>
+<tr>
+<td>Formas</td>
+<td>íris/círculo, persiana, onda, mosaico, cartão virando</td>
+<td>remocn <code>iris-wipe</code>, <code>venetian-blinds</code>, <code>wave-wipe</code>; shotcraft <code>circle-match-iris</code>, <code>mosaic-reframe</code>, <code>card-flip-reveal</code></td>
+<td>✅ 3 · 🟢 resto</td>
+</tr>
+<tr>
+<td>Material</td>
+<td>papel rasgado, página virando, papel amassado, tinta, impressão</td>
+<td>remocn <code>paper-tear</code>, <code>page-turn</code>, <code>crumple-toss</code>; shotcraft <code>tear-streak</code>, <code>page-turn</code>, <code>print-texture</code></td>
+<td>✅ rasgo · 🟢 resto</td>
+</tr>
+<tr>
+<td>Dissolver</td>
+<td>fumaça, grão, pixel, partículas, brasa, redemoinho</td>
+<td>remocn <code>smoke/grain/pixel/particle/perlin/swirl-dissolve</code>, <code>ember-burn</code></td>
+<td>🟢</td>
+</tr>
+<tr>
+<td>Impacto</td>
+<td>flash branco, glitch, tremida</td>
+<td>shotcraft <code>white-flash</code>; remocn <code>glitch-cut</code>, <code>impact-shake</code></td>
+<td>✅ flash · 🟢 resto</td>
+</tr>
+<tr>
+<td>Nativas do estilo</td>
+<td>dobra-corta-desdobra (recorte), tinta que floresce (aquarela), livro que abre (pop-up)…</td>
+<td>lemo (1 a 3 por estilo)</td>
+<td>🟡</td>
+</tr>
+</tbody>
+</table></div>
+<h2>7. Câmera</h2>
+<p>Zoom de impacto, dolly zoom, camadas de profundidade (parallax), voo por cima, órbita, plano inclinado, câmera espacial,
+foco que muda, planeta miniatura, travelling. Fontes: shotcraft camera (10), remocn (<code>dolly-zoom</code>, <code>parallax-depth</code>, <code>focus-pull</code>,
+<code>orbit-lock</code>, <code>tiny-planet</code>, <code>turntable</code>), lemo (gramática de câmera por estilo).
+No motor ✅: 6 movimentos lentos (aproxima, afasta, laterais, sobe, diagonal). O resto é 🟢/🟡.</p>
+<h2>8. Ritmo e montagem</h2>
+<p>Corte na batida, lista que troca no ritmo, grade de painéis, 4 cenas paralelas, interrupção de ritmo, acelera-congela (speed ramp),
+gramática de trailer, timing de anime (sakuga). Fonte: shotcraft rhythm (8). 🟢</p>
+<h2>9. Abertura e encerramento</h2>
+<p>Abertura: tinta da marca, grua subindo, paisagem de dados, fratura, campo de ícones colorindo, letras se materializando, título em órbita (shotcraft opening, 11).
+Encerramento: logo encolhendo para a assinatura, dissolver em grão, letreiro neon, interface virando a marca (shotcraft outro, 6).
+No motor ✅: bloco CTA. O resto é 🟢.</p>
+<h2>10. Imagens, vídeos e animações (mídia)</h2>
+<div class="t"><table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>De onde</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fotos com licença livre</td>
+<td>Openverse/Wikimedia (<code>npm run imagens</code>)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Ilustrações geradas por IA</td>
+<td>skill <code>gerar-imagem</code> (OpenAI gpt-image)</td>
+<td>✅ (skill sua, ainda não ligada ao fluxo)</td>
+</tr>
+<tr>
+<td>Vídeo de apoio (b-roll)</td>
+<td>Wikimedia Commons (usado no projeto do Grok); Pexels exige chave</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td>Ícones</td>
+<td>remocn-icons</td>
+<td>🟢</td>
+</tr>
+<tr>
+<td>Mascote com corpo (31 emoções, 11 danças, objetos na mão)</td>
+<td>claude-animation-base</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td>Personagens de cartoon com boca sincronizada</td>
+<td>lemo <code>scifi-toon</code>, <code>rubber-hose</code>, <code>midcentury-toon</code></td>
+<td>🟡</td>
+</tr>
+<tr>
+<td>Logos de empresas</td>
+<td>uso editorial (projeto do Grok)</td>
+<td>✅ manual</td>
+</tr>
+</tbody>
+</table></div>
+<h2>11. 2D, 2.5D ou 3D</h2>
+<ul>
+<li><strong>2D</strong> (CSS/SVG): todos os estilos atuais ✅.</li>
+<li><strong>2.5D</strong> (camadas com profundidade, parallax, cartões em perspectiva): remocn <code>parallax-depth</code>, <code>perspective-*</code>; shotcraft <code>depth-layer-moves</code> 🟢.</li>
+<li><strong>3D real</strong> (luz, sombra, câmera): ✅ 2 blocos (gráfico 3D, objeto 3D). lemo <code>lowpoly-island</code>, <code>teardown</code>, <code>white-model</code>, <code>glass-product</code>, <code>brick-toy</code> 🟡; remocn <code>isometric-build</code>, <code>exploded-view</code>, <code>extrude-pop</code> 🟢.</li>
+</ul>
+<h2>12. Efeitos sonoros</h2>
+<div class="t"><table>
+<thead>
+<tr>
+<th>Fonte</th>
+<th>O que tem</th>
+<th>Licença</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nossa biblioteca</td>
+<td>36 sons em 11 tipos (papel, pop, carimbo, whoosh, risco, tick, brilho…)</td>
+<td>Mixkit + gerados por nós</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>shotcraft</td>
+<td>149 sons em 16 categorias: transição (23), UI (18), impacto (14), dados/glitch (13), texto/caneta (13), papel (10), câmera (10), luz/brilho (10), filme/fita (8), mecânico (8), fluido (5), sci-fi (5), vidro (4), contador (4), plateia (3), riser (1)</td>
+<td>Mixkit na maioria; <strong>6 sem origem confirmada: não usar</strong></td>
+<td>🟢 (copiar os com licença ok)</td>
+</tr>
+<tr>
+<td>lemo</td>
+<td>sons <strong>gerados por código</strong> e casados com cada estilo: clique de bloco, crash, whoosh, rangido, baque, passo, ding, pop, ruído de rádio, estrondo, ignição, batimento</td>
+<td>código próprio (MIT)</td>
+<td>🟡</td>
+</tr>
+</tbody>
+</table></div>
+<h2>13. Música de fundo</h2>
+<div class="t"><table>
+<thead>
+<tr>
+<th>Fonte</th>
+<th>O que é</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lemo <code>music.py</code></td>
+<td>trilha <strong>composta por código</strong> para cada filme, com os cortes caindo na batida</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td>Bibliotecas de instrumentos do lemo (<code>sampler.py</code>)</td>
+<td>instrumentos reais (74–397 MB)</td>
+<td>⚪ não vêm no repositório</td>
+</tr>
+<tr>
+<td>Kevin MacLeod / incompetech (CC BY)</td>
+<td>usado no projeto do Grok, com crédito</td>
+<td>✅ manual</td>
+</tr>
+<tr>
+<td>shotcraft (5 faixas)</td>
+<td>origem incerta</td>
+<td>não usar</td>
+</tr>
+<tr>
+<td>FounderPapers</td>
+<td><strong>sem música</strong>: você escolhe no app ao postar</td>
+<td>✅ regra da marca</td>
+</tr>
+</tbody>
+</table></div>
+<h2>14. Voz</h2>
+<p>Google Chirp 3 HD (atual) ✅ · edge-tts (grátis, online) 🟢 · Kokoro (offline) 🟢 · sua própria voz gravada (transcrita para sincronizar) 🟢.</p>
+<hr />
+<h2>Como isso vira vídeo menos chato</h2>
+<p>Cada vídeo ganha uma <strong>receita</strong> antes do roteiro, com uma escolha por camada e sem repetir a do último vídeo da marca:</p>
+<div class="t"><table>
+<thead>
+<tr>
+<th>Camada</th>
+<th>Exemplo de receita</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Formato</td>
+<td>mito vs verdade</td>
+</tr>
+<tr>
+<td>Estilo</td>
+<td>Quadro branco</td>
+</tr>
+<tr>
+<td>Informação</td>
+<td>número rolando, círculo à mão na foto, checklist, antes/depois com cortina</td>
+</tr>
+<tr>
+<td>Texto</td>
+<td>escrita à mão + riscar e trocar</td>
+</tr>
+<tr>
+<td>Transição</td>
+<td>câmera viajando pelo quadro + 1 apagador</td>
+</tr>
+<tr>
+<td>Câmera</td>
+<td>voo por cima nas cenas de mapa</td>
+</tr>
+<tr>
+<td>Som</td>
+<td>caneta, apagador, ímã</td>
+</tr>
+<tr>
+<td>Música</td>
+<td>trilha leve por código (ou nenhuma)</td>
+</tr>
+<tr>
+<td>2D/3D</td>
+<td>2D</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Próximo passo sugerido</h2>
+<ol>
+<li>Tirar as ferramentas dos estilos e montar uma <strong>biblioteca por camada</strong> no motor (transições, texto, destaques, números, câmeras, sons),
+   que qualquer estilo pode usar. Começar pelo que já é Remotion (shotcraft e remocn): ganho rápido e grande.</li>
+<li>Construir os estilos escolhidos em cima dessa biblioteca.</li>
+<li>Gerar a receita automaticamente a cada vídeo, sem repetir a anterior.</li>
+</ol></main></body></html>
