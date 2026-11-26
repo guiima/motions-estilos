@@ -72,13 +72,6 @@
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
   const filtros = $("filtros");
-  const cats = [["todas", "Todas"], ...Object.entries(D.categorias).filter(([k]) => D.estilos.some((e) => e.cat === k))];
-  cats.forEach(([k, nome]) => {
-    const b = document.createElement("button");
-    b.type = "button"; b.className = "chip"; b.textContent = nome; b.dataset.cat = k;
-    b.onclick = () => { cat = k; desenha(); };
-    filtros.insertBefore(b, $("busca"));
-  });
   $("busca").addEventListener("input", (e) => { termo = e.target.value.toLowerCase(); desenha(); });
   const destaque = () => {
     const e = D.estilos.find((x) => x.id === sel);
@@ -110,7 +103,6 @@
   $("modal").addEventListener("click", (e) => { if (e.target === $("modal")) fecha(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("modal").hidden) fecha(); });
   const desenha = () => {
-    filtros.querySelectorAll(".chip").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.cat === cat)));
     const lista = D.estilos.filter((e) => (cat === "todas" || e.cat === cat) && (!termo || (e.nome + " " + e.visual + " " + e.combina).toLowerCase().includes(termo)));
     $("contagem").textContent = `Catálogo · ${lista.length} de ${D.estilos.length} estilos`;
     $("grade").innerHTML = lista.length ? lista.map((e) => `
