@@ -1,0 +1,74 @@
+{
+ "volume": {
+  "whoosh": 0.22,
+  "pop": 0.3,
+  "papel": 0.4,
+  "carimbo": 0.45,
+  "impacto": 0.35,
+  "tecla": 0.25,
+  "risco": 0.28,
+  "grave": 0.4,
+  "tick": 0.3,
+  "brilho": 0.2,
+  "notificacao": 0.35
+ },
+ "tipos": {
+  "whoosh": [
+   "whoosh-m1.mp3",
+   "whoosh-m2.mp3",
+   "whoosh-m3.mp3",
+   "whoosh-m4.mp3",
+   "whoosh-s1.mp3",
+   "whoosh-s2.mp3",
+   "whoosh-s3.mp3"
+  ],
+  "pop": [
+   "pop-m1.mp3",
+   "pop-m2.mp3",
+   "pop-1.mp3",
+   "pop-2.mp3",
+   "pop-3.mp3",
+   "pop-4.mp3"
+  ],
+  "grave": [
+   "grave-m1.mp3",
+   "grave-s1.mp3",
+   "grave-s2.mp3"
+  ],
+  "impacto": [
+   "impacto-m1.mp3",
+   "impacto-m2.mp3"
+  ],
+  "tecla": [
+   "tecla-m1.mp3"
+  ],
+  "notificacao": [
+   "notificacao-m1.mp3"
+  ],
+  "papel": [
+   "papel-1.mp3",
+   "papel-2.mp3",
+   "papel-3.mp3",
+   "papel-4.mp3"
+  ],
+  "carimbo": [
+   "carimbo-1.mp3",
+   "carimbo-2.mp3",
+   "carimbo-3.mp3"
+  ],
+  "risco": [
+   "risco-1.mp3",
+   "risco-2.mp3",
+   "risco-3.mp3"
+  ],
+  "tick": [
+   "tick-1.mp3",
+   "tick-2.mp3",
+   "tick-3.mp3"
+  ],
+  "brilho": [
+   "brilho-1.mp3",
+   "brilho-2.mp3"
+  ]
+ }
+}
