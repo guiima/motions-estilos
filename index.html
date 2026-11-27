@@ -40,7 +40,9 @@
   .assistir:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
   .status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600 }
   .status::before { content: ""; width: 8px; height: 8px; border-radius: 50% ; background: currentColor }
-  .s-pronto { color: var(--ok) } .s-base { color: var(--base) } .s-sob-demanda { color: var(--demanda) }
+  .s-pronto { color: var(--ok) } .s-base, .s-em-teste { color: var(--base) } .s-sob-demanda { color: var(--demanda) } .s-referencia-disponivel { color: var(--accent) }
+  .ref { font-size: 13px; line-height: 1.5; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin: 0 0 10px }
+  .ref a { color: var(--accent) }
   .grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px }
   .card { display: flex; flex-direction: column; gap: 6px; text-align: left; background: var(--card); color: var(--fg); border: 1px solid var(--line); border-radius: 12px; padding: 8px 8px 12px; font: inherit; cursor: pointer; min-width: 0 }
   .card[aria-current="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) }
@@ -63,14 +65,17 @@
     <input class="busca" id="busca" type="search" placeholder="Buscar: aquarela, pixel, luxo, produto…" aria-label="Buscar estilo">
   </div>
   <div class="grade" id="grade"></div>
-  <footer class="credito">Capas e vídeos de demonstração: <a href="https://github.com/lemomo-ai/lemo-opuscar" target="_blank" rel="noopener">Lemo-Opuscar by Lemomo (LemoLab)</a>, licença <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> (capas reduzidas). Descrições em português escritas para este catálogo.</footer>
+  <footer class="credito">Capas, vídeos de demonstração e código de referência: <a href="https://github.com/lemomo-ai/lemo-opuscar" target="_blank" rel="noopener">Lemo-Opuscar by Lemomo (LemoLab)</a>, licença <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> (capas reduzidas; código MIT). Descrições em português escritas para este catálogo.</footer>
 </div>
 <div class="fundo-modal" id="modal" hidden><section class="destaque" id="destaque" role="dialog" aria-modal="true" aria-label="Detalhes do estilo"></section></div>
 <script src="dados.js"></script>
 <script>
 (() => {
   const D = window.__CATALOGO__;
-  const STATUS = {"pronto": "Pronto no motor", "base": "Versão inicial (vai ser refeita)", "sob-demanda": "Construído na 1ª vez que usar"};
+  const STATUS = {"pronto": "Pronto no motor", "em-teste": "No motor, em teste", "base": "Versão inicial (vai ser refeita)",
+    "referencia-disponivel": "Código de referência disponível (porta na 1ª vez que usar)", "sob-demanda": "Construído na 1ª vez que usar"};
+  const CURTO = {"pronto": "Pronto", "em-teste": "Em teste", "base": "Versão inicial", "referencia-disponivel": "Tem código", "sob-demanda": "Sob demanda"};
+  const TEC = {"canvas2d": "Canvas 2D", "three": "3D (three.js)", "webgl": "WebGL", "python": "Python"};
   let cat = "todas", sel = null, termo = "", origem = null;
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
@@ -85,7 +90,8 @@
         <h2>${esc(e.nome)}</h2>
         <p>${esc(e.visual)}</p>
         <p><span class="rotulo">Combina com</span><br>${esc(e.combina)}</p>
-        <p class="status s-${e.status}">${STATUS[e.status]}</p>
+        <p class="status s-${e.status}">${STATUS[e.status] ?? e.status}</p>
+        ${e.codigo ? `<p class="ref"><b>Código do demo:</b> ${TEC[e.tecnologia] ?? e.tecnologia} · adaptar ao motor: ${esc(e.esforco ?? "?")}<br><a href="${e.codigo}" target="_blank" rel="noopener">ver o código original (MIT) ↗</a></p>` : ""}
         <div class="acoes">
           <button type="button" class="usar" id="usar">Usar este estilo</button>
         </div>
@@ -113,7 +119,7 @@
         ${e.capa ? `<img src="${e.capa}" alt="" loading="lazy">` : ""}
         <span class="nome">${esc(e.nome)}</span>
         <span class="vis">${esc(e.visual)}</span>
-        <span class="status s-${e.status}">${e.status === "pronto" ? "Pronto" : e.status === "base" ? "Versão inicial" : "Sob demanda"}</span>
+        <span class="status s-${e.status}">${CURTO[e.status] ?? e.status}${e.tecnologia ? ` · ${TEC[e.tecnologia] ?? e.tecnologia}` : ""}</span>
       </button>`).join("") : `<p class="vazio">Nenhum estilo com esse filtro.</p>`;
     $("grade").querySelectorAll(".card").forEach((c) => c.onclick = () => abre(c.dataset.id, c));
   };
